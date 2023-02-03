@@ -4,9 +4,6 @@ import Error from './pages/Error.js';
 import StudentLanding from './pages/Student/StudentLanding';
 import ProfessorLanding from './pages/Professor/ProfessorLanding';
 import ProfessorDashboard from './pages/Professor/ProfessorDashboard';
-import { AuthContext } from './context/AuthContext';
-import { useAuth } from './hooks/useAuth';
-
 
 const router = createBrowserRouter([
   {
@@ -29,13 +26,8 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  const { user, setUser} = useAuth();
-
-
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
       <RouterProvider router={router} />
-    </AuthContext.Provider>
   );
 }
 
