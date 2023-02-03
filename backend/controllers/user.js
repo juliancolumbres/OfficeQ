@@ -8,23 +8,36 @@ const newUser = (req, res) => {
         email: email,
         password: password
     })
-    newUser.save().then((user) => {
-        res.send(user)
+
+    User.findOne({email: email}).then((user) => {
+        if (user != null) {
+            res.status(409);
+            res.send({error: "email already in use"});
+        }
+        else {
+            newUser.save().then((user) => {
+                res.send({user_id: user._id})
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }).catch((err) => {
-        console.log(error)
+        console.log(err)
     })
+    console.log("executed");
 };
 
 const findUser = (req, res) => {
     email = req.body.email;
     password = req.body.password;
 
-    const user = User.findOne({email: email}).then((user) => {
+    User.findOne({email: email}).then((user) => {
         if (user == null || password !== user.password) {
-            res.send({message: "invalid email/password"});
+            res.status(401);
+            res.send({error: "invalid email/password"});
         }
         else {
-            res.send({message: "logged in"});
+            res.send({user_id: user._id});
         }
     }).catch((err) => {
         console.log(err)

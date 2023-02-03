@@ -1,20 +1,41 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from './pages/Root.js';
+import Error from './pages/Error.js';
+import StudentLanding from './pages/Student/StudentLanding';
+import ProfessorLanding from './pages/Professor/ProfessorLanding';
+import ProfessorDashboard from './pages/Professor/ProfessorDashboard';
+import { AuthContext } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <Error />
+  },
+  {
+    path: "/student",
+    element: <StudentLanding />,
+  },
+  {
+    path: "/professor",
+    element: <ProfessorLanding />,
+  },
+  {
+    path: "/professor/dashboard",
+    element: <ProfessorDashboard />,
+  },
+])
+
 function App() {
+  const { user, setUser} = useAuth();
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
   );
 }
 
