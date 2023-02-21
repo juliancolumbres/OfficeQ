@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-// const UserContext = React.createContext({});
+import { UserContext } from '../../context/userContext';
 
 
 export default function ProfessorLanding() {
@@ -10,30 +10,29 @@ export default function ProfessorLanding() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    // const [user, setUser] = useContext(UserContext);
+    const [user, setUser] = useContext(UserContext);
 
     const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    await fetch('http://localhost:3001/login', {
-    method: "POST",
-    body: JSON.stringify({
-        email: email,
-        password: password
-    }),
-    headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
-    .then(response => response.json()) 
-    .then(json => {
-        console.log(json);
-        setIsLoading(false);
-    })
-    .catch(err => {
-        setError(err.response.data.message);
-    });
-    //    setUser(response.data.user);
-        navigate('/professor/dashboard');
+        event.preventDefault();
+        setIsLoading(true);
+        await fetch('http://localhost:3001/login', {
+            method: "POST",
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json()) 
+        .then(response => {
+            console.log(response.user_id);
+            setIsLoading(false);
+            setUser(response.user_id);
+            navigate('./dashboard')
+        })
+        .catch(err => {
+            setError(err.response.data.message);
+        });
    };
 
     return (

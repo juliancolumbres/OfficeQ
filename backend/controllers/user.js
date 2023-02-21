@@ -1,37 +1,43 @@
 const User = require('../models/user.js');
 
 const newUser = (req, res) => {
-    email = req.body.email,
-    password = req.body.password
+    const email = req.body.email;
+    const password = req.body.password;
+    const userRole = req.body.userRole;
 
-    let newUser = new User({
+    const newUser = new User({
         email: email,
-        password: password
+        password: password,
+        userRole: userRole
     })
 
-    User.findOne({email: email}).then((user) => {
+    User.findOne({ email: email, userRole: userRole }).then((user) => {
         if (user != null) {
             res.status(409);
-            res.send({error: "email already in use"});
+            res.send({ error: "email already in use" });
         }
         else {
             newUser.save().then((user) => {
-                res.send({user_id: user._id})
+                res.send({ user_id: user._id });
             }).catch((err) => {
-                console.log(err)
+                res.status(500);
+                res.send({ error: "internal server error" });
+                console.log(err);
             })
         }
     }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
         console.log(err)
     })
-    console.log("executed");
 };
 
 const findUser = (req, res) => {
-    email = req.body.email;
-    password = req.body.password;
+    const email = req.body.email;
+    const password = req.body.password;
+    const userRole = req.body.userRole;
 
-    User.findOne({email: email}).then((user) => {
+    User.findOne({email: email, userRole: userRole }).then((user) => {
         if (user == null || password !== user.password) {
             res.status(401);
             res.send({error: "invalid email/password"});
@@ -40,9 +46,10 @@ const findUser = (req, res) => {
             res.send({user_id: user._id});
         }
     }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
         console.log(err)
     })
 };
-
 
 module.exports = {newUser, findUser};

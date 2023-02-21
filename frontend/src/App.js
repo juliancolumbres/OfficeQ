@@ -4,6 +4,8 @@ import Error from './pages/Error.js';
 import StudentLanding from './pages/Student/StudentLanding';
 import ProfessorLanding from './pages/Professor/ProfessorLanding';
 import ProfessorDashboard from './pages/Professor/ProfessorDashboard';
+import { UserContext } from './context/userContext';
+import { useState } from 'react';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +28,13 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const [user, setUser] = useState(null);
+
+
   return (
-      <RouterProvider router={router} />
+      <UserContext.Provider value={[user, setUser]}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
   );
 }
 
