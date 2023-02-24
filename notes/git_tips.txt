@@ -1,0 +1,49 @@
+NOTES:
+1) Make sure you are on the main branch before creating your branch!
+2) DO NOT merge your branch on Github before you get reviewers on it.
+3) If you are unsure of something, get help.
+
+Here are several commands from the live github tutorial we had on 3/18/21.
+
+1. Cloning a repo + Setting up your project folder
+    a) First create a folder in your folder directory.
+    b) Open a command line prompt (ex: git bash). 
+    c) Change your directory in command line prompt by typing "cd [insert folder path]"
+    d) Type "code ."    ---  This should open your VSCode.
+    e) Go to the github repo page. Click "Code" and click the clipboard to copy the HTTPS url.
+    f) Go back to your VSCode, locate your terminal and make a new one.
+    g) "git clone [the url you copied from github]"
+        - you should see the new files inside your VScode directory now.
+
+2. Branch Commands
+    a) git branch 
+        - tells you what branch you are currently on.
+    b) git checkout -b [new branch name]
+        - this command creates a new branch after cloning the main branch.
+    c) git checkout [branch name you want to check out]
+
+3. Editing your branch and pushing.
+    a) If you are currently in "main" branch, "git checkout [your branch]" into your OWN branch, or create your custom branch using "git checkout -b [new branch name]".
+    b) Once you are in YOUR branch, add files, edit files, make changes.
+    c) When you are ready to push your code to Github.
+        1) git status
+            - Check what files you have modified
+        2) git add [file names that you modified]
+        3) git commit -m "[add a useful comment]"
+        4) git push origin [YOUR branch name]
+            - If this gives you errors after rebasing, use "git push --force origin [YOUR branch name]"
+    d) Go to github, check your branch to see the changes you made!
+
+4. Create Pull Request
+    a) Go to github, locate your branch.
+    b) There should be a green box that allows you to "Compare and Create Pull Request"
+    c) Click that and type in meaningful titles + description of what feature you pushed.
+    d) Add reviewers to your PR, and add yourself to Assignees.
+    e) DO NOT CLICK MERGE. Let other people review your branch.
+
+5. Rebase
+    a) git checkout main
+    b) git pull origin main
+    c) git checkout [YOUR BRANCH NAME]
+    d) git rebase main
+    e) Make sure that you recieved all the new files from main.
