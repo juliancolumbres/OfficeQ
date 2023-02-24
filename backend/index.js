@@ -5,7 +5,6 @@ const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
-
 // set up express
 const app = express();
 app.use(cors());
@@ -27,7 +26,9 @@ db.mongoose.connect(process.env.MONGO_URI)
 
 // add routes from routes folder
 const userRoutes = require('./routes/user');
-app.use('/', userRoutes);
+// const sessionRoutes = require('./routes/session');
+// app.use('/session', sessionRoutes);
+app.use('/user', userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
