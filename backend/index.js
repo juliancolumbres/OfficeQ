@@ -26,8 +26,8 @@ db.mongoose.connect(process.env.MONGO_URI)
 
 // add routes from routes folder
 const userRoutes = require('./routes/user');
-// const sessionRoutes = require('./routes/session');
-// app.use('/session', sessionRoutes);
+const sessionRoutes = require('./routes/session');
+app.use('/session', sessionRoutes);
 app.use('/user', userRoutes);
 
 app.listen(PORT, () => {
