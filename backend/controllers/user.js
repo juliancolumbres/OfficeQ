@@ -1,4 +1,5 @@
 const User = require('../models/user.js');
+const Session = require('../models/session.js');
 
 const newUser = (req, res) => {
     const email = req.body.email;
@@ -52,4 +53,17 @@ const findUser = (req, res) => {
     })
 };
 
-module.exports = {newUser, findUser};
+const getSessions = (req, res) => {
+    const userId = req.params.userId;
+    Session.find({professorId: userId}).then((sessions) => {
+        res.send(sessions);
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+};
+
+
+
+module.exports = {newUser, findUser, getSessions};
