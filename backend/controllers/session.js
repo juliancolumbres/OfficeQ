@@ -10,6 +10,9 @@ const newSession = (req, res) => {
     const startTime = req.body.startTime;
     const endTime = req.body.endTime;
     const inSession = req.body.inSession;
+    const groups = [];
+    const currentGroupIndex = 0; 
+
 
     const newSession = new Session({
         professorId: professorId,
@@ -21,6 +24,8 @@ const newSession = (req, res) => {
         startTime: startTime,
         endTime: endTime,
         inSession: inSession,
+        groups: groups,
+        currentGroupIndex: currentGroupIndex
     });
 
     newSession.save().then((session) => {

@@ -8,9 +8,11 @@ const Session = mongoose.model(
         school: { type: String },
         description: { type: String },
         location: { type: String },
-        startTime: { type: Date },
-        endTime: { type: Date },
+        startTime: { type: String },
+        endTime: { type: String },
         inSession: { type: Boolean },
+        groups: { type: Array },
+        currentGroupIndex: { type: Number }
 })
 
 module.exports = Session;

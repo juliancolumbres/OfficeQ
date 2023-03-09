@@ -6,5 +6,6 @@ router.post('/signup', userController.newUser);
 router.post('/login', userController.findUser); 
 
 router.get('/:userId/sessions', userController.getSessions);
+router.get('/:userId/sessions/enrolled', userController.getSessionsEnrolled);
 
 module.exports = router; 

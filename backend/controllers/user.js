@@ -65,5 +65,30 @@ const getSessions = (req, res) => {
 };
 
 
+const getSessionsEnrolled = (req, res) => {
+    const userId = req.params.userId;
+    
+    const query = {
+        groups: {
+          $elemMatch: {
+            studentQuestions: {
+              $elemMatch: { studentId: userId }
+            }
+          }
+        }
+      };
+    
+    Session.find(query).then((sessions) => {
+        res.send(sessions);
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+};
 
-module.exports = {newUser, findUser, getSessions};
+
+
+
+
+module.exports = {newUser, findUser, getSessions, getSessionsEnrolled};
