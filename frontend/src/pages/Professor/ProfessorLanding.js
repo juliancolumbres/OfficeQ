@@ -42,8 +42,10 @@ export default function ProfessorLanding() {
     }
 
     return (
+        <div>
+            <span class = "logo">Office<span class="colored-letter">Q</span></span>
         <div className="container">
-            <p>Welcome back</p>
+            <p className="welcomeSign"onClick={switchRegistered}>{isRegistered ? "Sign Into Your Account" : "Welcome to OfficeQ"}</p>
             <p>Sign in now to streamline your office hours</p>
             <p>Are you a student? <Link to={'/student'}>Click here</Link></p>
             <form onSubmit={handleSubmit}>
@@ -67,6 +69,7 @@ export default function ProfessorLanding() {
             </form>
             <button className="link-button"onClick={switchRegistered}>{isRegistered ? "Need an account?" : "Already have an account?"}</button>
             <p>{error}</p>
+        </div>
         </div>
     )
 }
