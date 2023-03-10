@@ -1,98 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context/userContext';
-import { Card, Row, Col, Container } from "react-bootstrap";
+import CreateSessionForm from "../../components/Professor/CreateSessionForm.jsx";
+import SessionsDisplay from "../../components/Professor/SessionsDisplay.jsx";
+import "./ProfessorDashboard.css"
 
-const getSessions = () => {
-    const testArray = [
-        {
-            _id: "id1",
-            sessionName: "session1",
-            hasStarted: false,
-            hasEnded: false,
-            school: "SJSU",
-            professorName: "Julian",
-            startTime: new Date(),
-            endTime: new Date(),
-            groups: [ 1, 2 ]
-        },
-        {
-            _id: "id2",
-            sessionName: "session2",
-            hasStarted: false,
-            hasEnded: false,
-            school: "SJSU",
-            professorName: "Julian",
-            startTime: new Date(),
-            endTime: new Date(),
-            groups: [ 1, 2 ]
-        },
-        {
-            _id: "id3",
-            sessionName: "session3",
-            hasStarted: false,
-            hasEnded: false,
-            school: "SJSU",
-            professorName: "Julian",
-            startTime: new Date(),
-            endTime: new Date(),
-            groups: [ 1, 2 ]
-        }
-    ]
-    return testArray;
-}
 
 export default function ProfessorDashboard() {
     const [user] = useContext(UserContext);
-    const [sessions, setSessions] = useState([]);
-
-    const getSessionsData = async () => {
-        setSessions(getSampleSessions());
-    }
-
-    const getSampleSessions = () => {
-        const testArray = [
-            {
-                _id: "id1",
-                sessionName: "session1",
-                hasStarted: false,
-                hasEnded: false,
-                school: "SJSU",
-                professorName: "Julian",
-                startTime: new Date(),
-                endTime: new Date(),
-                groups: [ 1, 2 ]
-            },
-            {
-                _id: "id2",
-                sessionName: "session2",
-                hasStarted: false,
-                hasEnded: false,
-                school: "SJSU",
-                professorName: "Julian",
-                startTime: new Date(),
-                endTime: new Date(),
-                groups: [ 1, 2 ]
-            },
-            {
-                _id: "id3",
-                sessionName: "session3",
-                hasStarted: false,
-                hasEnded: false,
-                school: "SJSU",
-                professorName: "Julian",
-                startTime: new Date(),
-                endTime: new Date(),
-                groups: [ 1, 2 ]
-            }
-        ]
-        return testArray;
-    }
-
-    useEffect(() => {
-        getSessionsData();
-    })
-
-
+    const [showCreateSessionForm, setShowCreateSessionForm] = useState(false);
     if (!user) {
         return (
             <div>
@@ -100,26 +15,18 @@ export default function ProfessorDashboard() {
             </div>
         )
     }
-
     return (
-        <div>
-            {user}
-            <Container>
-                <Row xs={1} md={3}>
-                    {
-                        sessions.map((session) => 
-                            <div>
-                                <Card key={session._id}>
-                                    <Card.Body>
-                                        <Card.Title>{session.sessionName}</Card.Title>
-                                        <Card.Text>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card> 
-                            </div>)
-                    }
-                </Row>
-            </Container>
+        <div className="dashboard-container">
+            <div className="dashboard-header">
+                <h1>OfficeQ</h1>
+            </div>
+            <div className="dashboard-body">
+                <div className="toggle-button"> 
+                    <button className="toggle-button-left" disabled={!showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>View Sessions</button>
+                    <button className="toggle-button-right" disabled={showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>Create Session</button>
+                </div>
+                {showCreateSessionForm ? <CreateSessionForm onSubmit={() => setShowCreateSessionForm(!showCreateSessionForm)}/> : <SessionsDisplay/>}
+            </div>
         </div>
     )
 }
