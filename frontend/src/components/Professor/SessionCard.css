@@ -1,0 +1,52 @@
+.card-container {
+    background-color : lightgray;
+    height: 14em;
+    width: 30em;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.top-section {
+    height: 30%;
+    display: flex;
+}
+
+.bottom-section {
+    border-top: medium dotted grey;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.center-button {
+    display: flex; 
+    justify-content: center;
+}
+
+.bottom-section button {
+    width: 7em;
+}
+
+.top-section > .left-labels {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.left-labels p {
+    margin: 0;
+}
+
+.top-section > .right-labels {
+    width: 50%;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.right-labels p {
+    margin: 0;
+}

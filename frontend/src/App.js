@@ -4,6 +4,7 @@ import Error from './pages/Error.js';
 import StudentLanding from './pages/Student/StudentLanding';
 import ProfessorLanding from './pages/Professor/ProfessorLanding';
 import ProfessorDashboard from './pages/Professor/ProfessorDashboard';
+import StudentDashboard from './pages/Student/StudentDashboard';
 import { UserContext } from './context/userContext';
 import { useState } from 'react';
 
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/student",
     element: <StudentLanding />,
+  },
+  {
+    path: "/student/dashboard",
+    element: <StudentDashboard />,
   },
   {
     path: "/professor",

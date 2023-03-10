@@ -2,15 +2,17 @@ const mongoose = require("mongoose");
 
 const Session = mongoose.model(
     "Session", {
-        sessionName: { type: String },
-        hasStarted: { type: Boolean },
-        hasEnded: { type: Boolean },
+        professorId: { type: String },
+        title: { type: String },
+        class: { type: String },
         school: { type: String },
-        professorName: { type: String },
-        className: { type: String },
         description: { type: String },
-        startTime: { type: Date },
-        endTime: { type: Date }
+        location: { type: String },
+        startTime: { type: String },
+        endTime: { type: String },
+        inSession: { type: Boolean },
+        groups: { type: Array },
+        currentGroupIndex: { type: Number }
 })
 
 module.exports = Session;
