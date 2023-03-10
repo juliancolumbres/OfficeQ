@@ -42,31 +42,34 @@ export default function ProfessorLanding() {
     }
 
     return (
-        <div className="container">
-            <p>Welcome back</p>
-            <p>Sign in now to streamline your office hours</p>
-            <p>Are you a student? <Link to={'/student'}>Click here</Link></p>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input
-                    name="email" 
-                    type="email"
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
-                    required>
-                </input>
-                <label htmlFor="password">Password</label>
-                <input 
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required>
-                </input>
-                <button type="submit">{isRegistered ? "Login": "Sign Up"}</button>
-            </form>
-            <button className="link-button"onClick={switchRegistered}>{isRegistered ? "Need an account?" : "Already have an account?"}</button>
-            <p>{error}</p>
+        <div>
+            <span class = "logo">Office<span class="colored-letter">Q</span></span>
+            <div className="container">
+                <p className="welcomeSign"onClick={switchRegistered}>{isRegistered ? "Sign Into Your Account" : "Welcome to OfficeQ"}</p>
+                <p>Sign in now to streamline your office hours</p>
+                <p>Are you a student? <Link to={'/student'}>Click here</Link></p>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        name="email" 
+                        type="email"
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
+                        required>
+                    </input>
+                    <label htmlFor="password">Password</label>
+                    <input 
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required>
+                    </input>
+                    <button type="submit">{isRegistered ? "Login": "Sign Up"}</button>
+                </form>
+                <button className="link-button"onClick={switchRegistered}>{isRegistered ? "Need an account?" : "Already have an account?"}</button>
+                <p>{error}</p>
+            </div>
         </div>
     )
 }
