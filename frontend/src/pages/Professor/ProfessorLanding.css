@@ -9,11 +9,39 @@ form {
   }
 
 form label, 
-form input,
-form button {
+form input{
     display: block;
     margin-bottom: 10px;
     width: 100%;
+}
+
+form label{
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+form input{
+    border: 1px solid #adadad;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size: 18px;
+}
+
+form button{
+    display: block;
+    border-radius: 8px;
+    background-color: #307EB6;
+    font-weight: bold;
+    color: #ffffff;
+    width: 60%;
+    height: 50px;
+    margin: auto;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 80px;
 }
 
 .link-button {
@@ -23,3 +51,29 @@ form button {
     cursor: pointer;
 }
 
+.welcomeSign{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 87px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.017em;
+    color: #307EB6;
+}
+
+.logo{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 60px;
+    display: flex;
+    letter-spacing: -0.017em;
+    color: #49B3FF;
+    padding-left: 15px;
+}
+.colored-letter{
+    color: #307EB6;
+}
