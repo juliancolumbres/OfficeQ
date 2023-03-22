@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context/userContext';
 import CreateSessionForm from "../../components/Professor/CreateSessionForm.jsx";
 import SessionsDisplay from "../../components/Professor/SessionsDisplay.jsx";
-import "./ProfessorDashboard.css"
+import styles from "./ProfessorDashboard.module.css"
 
 
 export default function ProfessorDashboard() {
@@ -16,14 +16,14 @@ export default function ProfessorDashboard() {
         )
     }
     return (
-        <div className="dashboard-container">
-            <div className="dashboard-header">
+        <div className={styles.container}>
+            <div className={styles.header}>
                 <h1>OfficeQ</h1>
             </div>
-            <div className="dashboard-body">
-                <div className="toggle-button"> 
-                    <button className="toggle-button-left" disabled={!showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>View Sessions</button>
-                    <button className="toggle-button-right" disabled={showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>Create Session</button>
+            <div className={styles.dashboardBody}>
+                <div className={styles.toggleButton}> 
+                    <button className={styles.buttonLeft} disabled={!showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>View Sessions</button>
+                    <button className={styles.buttonRight} disabled={showCreateSessionForm} onClick={() => setShowCreateSessionForm(!showCreateSessionForm)}>Create Session</button>
                 </div>
                 {showCreateSessionForm ? <CreateSessionForm onSubmit={() => setShowCreateSessionForm(!showCreateSessionForm)}/> : <SessionsDisplay/>}
             </div>

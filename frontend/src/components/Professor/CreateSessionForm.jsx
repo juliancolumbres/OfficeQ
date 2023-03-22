@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import "./CreateSessionForm.css";
+import "./CreateSessionForm.module.css";
 import axios from "axios";
 import { UserContext } from '../../context/userContext';
 
@@ -23,12 +23,19 @@ const CreateSessionForm = (props) => {
         const startDateTime = formattedDate + " " + startTime;
         const endDateTime = formattedDate + " " + endTime;
 
+        let response = await axios.get(`http://localhost:3001/user/${user}/name`);
+        const professorName = response.data.name;        
 
-        const response = await axios.post('http://localhost:3001/session/createSession', {
+        response = await axios.get(`http://localhost:3001/user/${user}/university`);
+        const university = response.data.university;
+
+
+        response = await axios.post('http://localhost:3001/session/createSession', {
             professorId: user,
+            professorName: professorName,
             title: title,
             class: course,
-            school: "SJSU",
+            university: university,
             description: description,
             location: location,
             startTime: startDateTime,

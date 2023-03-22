@@ -8,6 +8,8 @@ import axios from 'axios';
 
 export default function StudentLanding() {
     const [isRegistered, setIsRegistered] = useState(true);
+    const [name, setName] = useState('');
+    const [university, setUniversity] = useState('San Jose State University');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,20 +21,34 @@ export default function StudentLanding() {
     const handleSubmit = async (event) => {
         setError('');
         event.preventDefault();
-        console.log(email, password);
-        const authEndpoint = isRegistered ? "login" : "signup"; 
-        
-        const response = await axios.post('http://localhost:3001/user/' + authEndpoint, {
-            email: email,
-            password: password,
-            userRole: "Student"
-        }).catch((error) => {
-            if (error.response) {
-                console.log(error.response);
-                setError(error.response.data.error);
-            }
-        })
-        
+        let response = {};
+        if (isRegistered) {
+            response = await axios.post('http://localhost:3001/user/login', {
+                email: email,
+                password: password,
+                userRole: "Student"
+            }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response);
+                    setError(error.response.data.error);
+                }
+            })
+        }
+        else {
+            response = await axios.post('http://localhost:3001/user/signup', {
+                university: university,
+                name: name,
+                email: email,
+                password: password,
+                userRole: "Student"
+            }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response);
+                    setError(error.response.data.error);
+                }
+            })
+        }
+
         if (response) {
             console.log(response.data.user_id);
             setUser(response.data.user_id);
@@ -48,6 +64,20 @@ export default function StudentLanding() {
                 <p>Sign in now to attend your office hours</p>
                 <p>Are you a Professor? <Link to={'/professor'}>Click here</Link></p>
                 <form onSubmit={handleSubmit}>
+                    <div className="signup-labels" hidden={isRegistered}>
+                        <label htmlFor="university">University</label>
+                        <select value={university} name="university" onChange={(e) => setUniversity(e.target.value)}>
+                            <option value="San Jose State University">San Jose State University</option>
+                        </select>
+                        <label htmlFor="name">Full Name</label>
+                        <input 
+                            name="name"
+                            type="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required={!isRegistered}>
+                        </input>
+                    </div>
                     <label htmlFor="email">Email</label>
                     <input
                         name="email" 
