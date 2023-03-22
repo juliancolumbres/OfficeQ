@@ -3,6 +3,7 @@ const Session = require ('../models/session.js');
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
     const professorName = req.body.professorName;
+    const university = req.body.university;
     const title = req.body.title; 
     const className = req.body.class;
     const school = req.body.school;
@@ -18,6 +19,7 @@ const newSession = (req, res) => {
     const newSession = new Session({
         professorId: professorId,
         professorName: professorName,
+        university: university,
         title: title,
         class: className,
         school: school,
