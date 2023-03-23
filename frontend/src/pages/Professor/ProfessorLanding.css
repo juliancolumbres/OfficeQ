@@ -9,7 +9,8 @@ form {
   }
 
 form label, 
-form input{
+form input,
+form select {
     display: block;
     margin-bottom: 10px;
     width: 100%;
@@ -21,7 +22,8 @@ form label{
     margin-top: 40px;
 }
 
-form input{
+form input,
+form select {
     border: 1px solid #adadad;
     border-radius: 8px;
     padding-left: 10px;

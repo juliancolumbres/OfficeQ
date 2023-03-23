@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const Session = mongoose.model(
     "Session", {
         professorId: { type: String },
+        professorName: { type: String },
+        university: { type: String },
         title: { type: String },
         class: { type: String },
         school: { type: String },

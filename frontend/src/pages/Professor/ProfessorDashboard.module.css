@@ -1,13 +1,11 @@
-.dashboard-container {
+.container {
   margin: 4em;
   display: flex;
   flex-direction: column;
   gap: 5em;
 }
 
-.dashboard-body {
-    width: 100%;
-    height: 100%;
+.dashboardBody {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,32 +13,28 @@
     gap: 2em;
 }
 
-.toggle-button {
+.toggleButton {
     display: flex;
-    width: 35em;
+    width: 80%;
     height: 2.5em;
     border: 1px solid #ccc;
     border-radius: 2em;
     overflow: hidden;
+    font-size: larger;
   }
   
-  .toggle-button-left {
+  .buttonLeft {
     width: 50%;
-    height: 100%;
     background-color: #ccc;
     color: #fff;
     border: none;
  
   }
   
-  .toggle-button-right {
+  .buttonRight {
     width: 50%;
-    height: 100%;
     background-color: #fff;
     color: #333;
     border: none;
   }
   
-  /* .toggle-button-left.active {
-    background-color: #333;
-  } */
