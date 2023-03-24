@@ -65,7 +65,7 @@ const search = (req, res) => {
 }
 
 
-const addQuestionToTopic = (req, res) => {
+const addQuestionToTopic = async (req, res) => {
     const { id } = req.params;
     const { studentId, question, name, topic } = req.body;
 
@@ -73,12 +73,14 @@ const addQuestionToTopic = (req, res) => {
         .then((session) => {
             const groupIndex = session.groups.findIndex((group) => group.topic === topic);
 
+            const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
+
             if (groupIndex !== -1) {
-                session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
+                // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
+                studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
             } else {
                 session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name }] });
             }
-
             return session.save();
         })
         .then((updatedSession) => {
@@ -88,12 +90,6 @@ const addQuestionToTopic = (req, res) => {
             console.log(err);
             res.status(500).json({ error: 'Could not add student question to group.' });
         });
-
 }
 
-<<<<<<< HEAD
 module.exports = { newSession, addQuestionToTopic, search };
-=======
-
-module.exports = { newSession, addQuestionToTopic };
->>>>>>> Made small changes to add question route
