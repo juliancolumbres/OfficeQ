@@ -91,4 +91,9 @@ const addQuestionToTopic = (req, res) => {
 
 }
 
+<<<<<<< HEAD
 module.exports = { newSession, addQuestionToTopic, search };
+=======
+
+module.exports = { newSession, addQuestionToTopic };
+>>>>>>> Made small changes to add question route
