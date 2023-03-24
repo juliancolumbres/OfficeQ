@@ -1,17 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
-import './StudentLanding.css';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../context/userContext';
-import axios from 'axios'; 
+import { Link } from "react-router-dom";
+import './ProfessorLanding.css'; 
+import axios from 'axios';
 
 
-export default function StudentLanding() {
+export default function ProfessorLanding() {
+
     const [isRegistered, setIsRegistered] = useState(true);
-    const [name, setName] = useState('');
-    const [university, setUniversity] = useState('San Jose State University');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [university, setUniversity] = useState('San Jose State University');
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const setUser = useContext(UserContext)[1];
@@ -26,7 +27,7 @@ export default function StudentLanding() {
             response = await axios.post('http://localhost:3001/user/login', {
                 email: email,
                 password: password,
-                userRole: "Student"
+                userRole: "Professor"
             }).catch((error) => {
                 if (error.response) {
                     console.log(error.response);
@@ -40,7 +41,7 @@ export default function StudentLanding() {
                 name: name,
                 email: email,
                 password: password,
-                userRole: "Student"
+                userRole: "Professor"
             }).catch((error) => {
                 if (error.response) {
                     console.log(error.response);
@@ -61,10 +62,10 @@ export default function StudentLanding() {
             <span class = "logo">Office<span class="colored-letter">Q</span></span>
             <div className="container">
                 <p className="welcomeSign"onClick={switchRegistered}>{isRegistered ? "Sign Into Your Account" : "Welcome to OfficeQ"}</p>
-                <p>Sign in now to attend your office hours</p>
-                <p>Are you a Professor? <Link to={'/professor'}>Click here</Link></p>
+                <p>Sign in now to streamline your office hours</p>
+                <p>Are you a student? <Link to={'/student'}>Click here</Link></p>
                 <form onSubmit={handleSubmit}>
-                    <div className="signup-labels" hidden={isRegistered}>
+                    <div className="signup-inputs" hidden={isRegistered}>
                         <label htmlFor="university">University</label>
                         <select value={university} name="university" onChange={(e) => setUniversity(e.target.value)}>
                             <option value="San Jose State University">San Jose State University</option>

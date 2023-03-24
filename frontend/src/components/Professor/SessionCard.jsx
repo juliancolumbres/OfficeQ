@@ -1,4 +1,4 @@
-import "./SessionCard.css";
+import styles from "./SessionCard.module.css";
 
 // convert time to format "hour:minutes AM/PM"
 const formatTime = (time) => {
@@ -22,7 +22,7 @@ const formatTime = (time) => {
 
 const SessionCard = (props) => {
 
-    const { sessionId, professorId, title, 
+    const { sessionId, professorId, professorName, title, 
          school, description, location, 
         startTime, endTime, inSession } = props; 
 
@@ -33,22 +33,22 @@ const SessionCard = (props) => {
     const displayEndTime = formatTime(endTime); 
 
     return (
-        <div className="card-container">
-            <div className="top-section">
-                <div className="left-labels">
+        <div className={styles.card}>
+            <div className={styles.topSection}>
+                <div className={styles.leftLabels}>
                     <p>{title}</p>
                     <p>{props.class}</p>
-                    <p>{school}</p>
+                    <p>{professorName}</p>
                 </div>
-                <div className="right-labels">
+                <div className={styles.rightLabels}>
                     <p>{inSession ? "Live" : displayDate}</p>
                     <p>{displayStartTime} - {displayEndTime}</p>
                 </div>
             </div>
-            <div className="bottom-section">
+            <div className={styles.bottomSection}>
                 <p>{description}</p>
                 <p>{location}</p>
-                <div className="center-button">
+                <div className={styles.centerButton}>
                     <button>Manage</button>
                 </div>
             </div>

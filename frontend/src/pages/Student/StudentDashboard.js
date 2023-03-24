@@ -3,6 +3,8 @@ import { UserContext } from '../../context/userContext';
 import SessionsDisplay from "../../components/Student/SessionsDisplay.jsx";
 import "./StudentDashboard.css"
 
+import SearchComponent from '../../components/Student/SearchComponent.jsx';
+
 
 export default function StudentDashboard() {
     const [user] = useContext(UserContext);
@@ -24,7 +26,8 @@ export default function StudentDashboard() {
                     <button className="toggle-button-left" disabled={!showSearchComponent} onClick={() => setShowSearchComponent(!showSearchComponent)}>Enrolled Sessions</button>
                     <button className="toggle-button-right" disabled={showSearchComponent} onClick={() => setShowSearchComponent(!showSearchComponent)}>Search Sessions</button>
                 </div>
-                {showSearchComponent ? "Search Component" : <SessionsDisplay />}
+                {showSearchComponent ? <SearchComponent /> : <SessionsDisplay />}
+                
             </div>
         </div>
     )

@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from '../../context/userContext';
 import SessionCard from "./SessionCard.jsx";
 import axios from "axios";
-import "./SessionsDisplay.css";
+import styles from "./SessionsDisplay.module.css";
 
 const SessionsDisplay = () => {
     const [user] = useContext(UserContext);
@@ -32,10 +32,15 @@ const SessionsDisplay = () => {
     },[]);
 
     return (
-        <div className="display-grid">
-            {sessions.map((data) => (
-                <SessionCard {...data} />
-            ))}
+        <div>
+            <h1>Your Sessions</h1>
+            <div className={styles.container}>
+                <div className={styles.displayGrid}>
+                    {sessions.map((data) => (
+                        <SessionCard {...data} />
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }

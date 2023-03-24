@@ -1,7 +1,11 @@
-.display-grid {
+.displayGrid {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 3em;
-    width: 50%
+}
+
+.container{
+    display: flex;
+    justify-content: center;
 }

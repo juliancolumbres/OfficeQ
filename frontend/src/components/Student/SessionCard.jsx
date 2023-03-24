@@ -1,6 +1,8 @@
-import "./SessionCard.css";
+import styles from "./SessionCard.module.css";
 import { useContext } from "react";
 import { UserContext } from '../../context/userContext';
+
+
 // convert time to format "hour:minutes AM/PM"
 const formatTime = (time) => {
     try {
@@ -46,27 +48,27 @@ const SessionCard = (props) => {
     const displayEndTime = formatTime(endTime); 
 
     return (
-        <div className="card-container">
-            <div className="top-section">
-                <div className="left-labels">
+        <div className={styles.card}>
+            <div className={styles.topSection}>
+                <div className={styles.leftLabels}>
                     <p>{title}</p>
                     <p>{props.class}</p>
                     <p>{school}</p>
                 </div>
-                <div className="right-labels">
+                <div className={styles.rightLabels}>
                     <p>{inSession ? "Live" : displayDate}</p>
                     <p>{displayStartTime} - {displayEndTime}</p>
                 </div>
             </div>
-            <div className="bottom-section">
+            <div className={styles.bottomSection}>
                 <p>{description}</p>
                 <p>{location}</p>
-                <div className="middle-text-area">
-                    <div className="middle">
+                <div className={styles.middleTextArea}>
+                    <div className={styles.middle}>
                         <p>Groups ahead: {groupsAhead}</p>
                     </div>
                 </div>
-                <div className="right-button">
+                <div className={styles.rightButton}>
                     <button>My Topic</button>
                 </div>
             </div>

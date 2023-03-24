@@ -2,11 +2,15 @@ const User = require('../models/user.js');
 const Session = require('../models/session.js');
 
 const newUser = (req, res) => {
+    const university = req.body.university;
+    const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
     const userRole = req.body.userRole;
-
+    
     const newUser = new User({
+        university: university,
+        name: name,
         email: email,
         password: password,
         userRole: userRole
@@ -53,6 +57,28 @@ const findUser = (req, res) => {
     })
 };
 
+const getName = (req, res) => {
+    const userId = req.params.userId;
+    User.findOne({_id: userId}).then((user) => {
+        res.send({name: user.name});
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+};
+
+const getUniversity = (req, res) => {
+    const userId = req.params.userId;
+    User.findOne({_id: userId}).then((user) => {
+        res.send({university: user.university});
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+};
+
 const getSessions = (req, res) => {
     const userId = req.params.userId;
     Session.find({professorId: userId}).then((sessions) => {
@@ -91,4 +117,4 @@ const getSessionsEnrolled = (req, res) => {
 
 
 
-module.exports = {newUser, findUser, getSessions, getSessionsEnrolled};
+module.exports = {newUser, findUser, getName, getUniversity, getSessions, getSessionsEnrolled};

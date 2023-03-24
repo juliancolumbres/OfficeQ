@@ -2,7 +2,9 @@ const Session = require('../models/session.js');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
-    const title = req.body.title;
+    const professorName = req.body.professorName;
+    const university = req.body.university;
+    const title = req.body.title; 
     const className = req.body.class;
     const school = req.body.school;
     const description = req.body.description;
@@ -16,6 +18,8 @@ const newSession = (req, res) => {
 
     const newSession = new Session({
         professorId: professorId,
+        professorName: professorName,
+        university: university,
         title: title,
         class: className,
         school: school,
@@ -61,5 +65,29 @@ const addQuestionToTopic = (req, res) => {
 
 }
 
+const search = (req, res) => {
+    const professorName = req.query.professorName;
+    const className = req.query.className;
 
-module.exports = { newSession, addQuestionToTopic };
+    console.log(professorName);
+    console.log(className);
+
+    const query = {
+        $or: [
+            { class: className },
+            { professorName: professorName }
+        ]
+    };
+    
+    
+    Session.find(query).then((sessions) => {
+        res.send(sessions);
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+
+}
+
+module.exports = {newSession, search, addQuestionToTopic };
