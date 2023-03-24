@@ -4,7 +4,7 @@ const newSession = (req, res) => {
     const professorId = req.body.professorId;
     const professorName = req.body.professorName;
     const university = req.body.university;
-    const title = req.body.title; 
+    const title = req.body.title;
     const className = req.body.class;
     const school = req.body.school;
     const description = req.body.description;
@@ -78,8 +78,8 @@ const search = (req, res) => {
             { professorName: professorName }
         ]
     };
-    
-    
+
+
     Session.find(query).then((sessions) => {
         res.send(sessions);
     }).catch((err) => {
@@ -90,4 +90,32 @@ const search = (req, res) => {
 
 }
 
-module.exports = {newSession, search, addQuestionToTopic };
+
+const addQuestionToTopic = async (req, res) => {
+    const { id } = req.params;
+    const { studentId, question, name, topic } = req.body;
+
+    Session.findById(id)
+        .then((session) => {
+            const groupIndex = session.groups.findIndex((group) => group.topic === topic);
+
+            const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
+
+            if (groupIndex !== -1) {
+                // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
+                studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
+            } else {
+                session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name }] });
+            }
+            return session.save();
+        })
+        .then((updatedSession) => {
+            res.json(updatedSession);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: 'Could not add student question to group.' });
+        });
+}
+
+module.exports = { newSession, addQuestionToTopic, search };
