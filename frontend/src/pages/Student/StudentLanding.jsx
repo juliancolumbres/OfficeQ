@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import './StudentLanding.css';
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import axios from 'axios';
 
 
 export default function StudentLanding() {
+
+
     const [isRegistered, setIsRegistered] = useState(true);
     const [name, setName] = useState('');
     const [university, setUniversity] = useState('San Jose State University');
@@ -14,9 +16,25 @@ export default function StudentLanding() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const setUser = useContext(UserContext)[1];
-
+    const [userId, setUserId] = useContext(UserContext);
     const switchRegistered = () => setIsRegistered(!isRegistered);
+
+
+    // useEffect(() => {
+    //     console.log("pressed back button");
+    //     const handleBrowserBackButton = () => {
+    //         setUserId(null);
+    //     }
+    // }, []);
+
+    // useEffect(() => {
+    //     if (userId !== null && userId !== '') {
+    //         console.log("set user id: " + userId)
+    //         console.log("navigate");
+    //         navigate('./dashboard');
+    //     }
+    // }, [userId])
+
 
     const handleSubmit = async (event) => {
         setError('');
@@ -51,7 +69,7 @@ export default function StudentLanding() {
 
         if (response) {
             console.log(response.data.user_id);
-            setUser(response.data.user_id);
+            await setUserId(response.data.user_id);
             navigate('./dashboard');
         }
     }

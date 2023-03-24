@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../context/userContext';
 import { Link } from "react-router-dom";
@@ -15,9 +15,16 @@ export default function ProfessorLanding() {
     const [university, setUniversity] = useState('San Jose State University');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const setUser = useContext(UserContext)[1];
+    const [user, setUser] = useContext(UserContext);
 
     const switchRegistered = () => setIsRegistered(!isRegistered);
+
+
+    useEffect(() => {
+        
+        console.log("changed USER ID");
+        console.log(user);
+    }, [user])
 
     const handleSubmit = async (event) => {
         setError('');
@@ -51,9 +58,8 @@ export default function ProfessorLanding() {
         }
 
         if (response) {
-            console.log(response.data.user_id);
-            setUser(response.data.user_id);
-            navigate('./dashboard');
+            await setUser(response.data.user_id);
+            // navigate('./dashboard');
         }
     }
 

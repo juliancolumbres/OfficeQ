@@ -7,6 +7,7 @@ import styles from "./ProfessorDashboard.module.css"
 
 export default function ProfessorDashboard() {
     const [user] = useContext(UserContext);
+    console.log("professor id: " + user);
     const [showCreateSessionForm, setShowCreateSessionForm] = useState(false);
     if (!user) {
         return (

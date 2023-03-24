@@ -1,12 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../context/userContext';
 import SessionsDisplay from "../../components/Student/SessionsDisplay.jsx";
+import { useNavigate } from "react-router-dom";
 import "./StudentDashboard.css"
+
+import SearchComponent from "../../components/Student/SearchComponent";
+
 
 
 export default function StudentDashboard() {
-    const [user] = useContext(UserContext);
+    const [user, setUser] = useContext(UserContext);
     const [showSearchComponent, setShowSearchComponent] = useState(false);
+    const navigate = useNavigate();
+    console.log(user);
+
+
     if (!user) {
         return (
             <div>
@@ -24,7 +32,7 @@ export default function StudentDashboard() {
                     <button className="toggle-button-left" disabled={!showSearchComponent} onClick={() => setShowSearchComponent(!showSearchComponent)}>Enrolled Sessions</button>
                     <button className="toggle-button-right" disabled={showSearchComponent} onClick={() => setShowSearchComponent(!showSearchComponent)}>Search Sessions</button>
                 </div>
-                {showSearchComponent ? "Search Component" : <SessionsDisplay />}
+                {showSearchComponent ? <SearchComponent /> : <SessionsDisplay />}
             </div>
         </div>
     )

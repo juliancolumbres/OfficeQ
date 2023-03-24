@@ -24,7 +24,10 @@ const SessionCard = (props) => {
 
     const { sessionId, professorId, professorName, title, 
          school, description, location, 
-        startTime, endTime, inSession } = props; 
+        startTime, endTime, inSession, groups } = props; 
+
+    const numOfGroups = groups.length;
+    const numOfStudents = getNumOfStudents(groups);
 
     const meetingDate = new Date(startTime);
     const displayDate = `${meetingDate.getMonth() + 1}/${meetingDate.getDate()}`;
@@ -46,8 +49,8 @@ const SessionCard = (props) => {
                 </div>
             </div>
             <div className={styles.bottomSection}>
-                <p>{description}</p>
-                <p>{location}</p>
+                <p>Total Topics: {numOfGroups}</p>
+                <p>Total Students: {numOfStudents}</p>
                 <div className={styles.centerButton}>
                     <button>Manage</button>
                 </div>
@@ -56,6 +59,18 @@ const SessionCard = (props) => {
 
         </div>
     )
+}
+
+
+const getNumOfStudents = (groups) => {
+    let count = 0;
+    for (const group of groups) {
+        // eslint-disable-next-line no-unused-vars
+        for (const question of group.studentQuestions) {
+            count++;
+        } 
+    }
+    return count;
 }
 
 export default SessionCard;
