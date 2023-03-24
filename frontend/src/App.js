@@ -5,6 +5,7 @@ import StudentLanding from './pages/Student/StudentLanding';
 import ProfessorLanding from './pages/Professor/ProfessorLanding';
 import ProfessorDashboard from './pages/Professor/ProfessorDashboard';
 import StudentDashboard from './pages/Student/StudentDashboard';
+import QuestionForum from './pages/Student/QuestionForum'
 import { UserContext } from './context/userContext';
 import { useState } from 'react';
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/professor/dashboard",
     element: <ProfessorDashboard />,
+  },
+  {
+    path: "/student/sessions/:sessionId/forum",
+    element: <QuestionForum />,
   },
 ])
 

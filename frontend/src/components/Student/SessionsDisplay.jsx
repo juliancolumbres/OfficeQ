@@ -31,7 +31,7 @@ const SessionsDisplay = () => {
     return (
         <div className={styles.displayGrid}>
             {sessions.map((data) => (
-                <SessionCard {...data} />
+                <SessionCard {...data} handleClick={() => {}}/>
             ))}
         </div>
     )

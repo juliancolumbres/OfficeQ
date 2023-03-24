@@ -1,11 +1,13 @@
 import {useState}  from "react";
 import axios from 'axios';
 import SessionCard from "./SessionCard";
+import { useNavigate } from "react-router-dom";
 
 const SearchComponent = () => {
 
     const [sessions, setSessions] = useState([]);
     const [userInput, setUserInput] = useState('');
+    const navigate = useNavigate();
 
     const searchSessions = async (searchParameter) => {
         const response = await axios.get(`http://localhost:3001/session/sessions?className=${searchParameter}`, {
@@ -27,6 +29,11 @@ const SearchComponent = () => {
 
     }
 
+    const navigateToForm = (sessionId) => {
+        console.log("click");
+        navigate(`/student/sessions/${sessionId}/forum`);
+    }
+
     return (
         <div>
             <input 
@@ -37,7 +44,7 @@ const SearchComponent = () => {
             </input>
             <button onClick={handleSubmit}>Search</button>
             {sessions.map((data) => (
-                <SessionCard {...data} />
+                <SessionCard {...data} handleClick={navigateToForm} />
             ))}
 
         </div>
