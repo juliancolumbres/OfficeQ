@@ -1,8 +1,8 @@
-const Session = require ('../models/session.js');
+const Session = require('../models/session.js');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
-    const title = req.body.title; 
+    const title = req.body.title;
     const className = req.body.class;
     const school = req.body.school;
     const description = req.body.description;
@@ -11,7 +11,7 @@ const newSession = (req, res) => {
     const endTime = req.body.endTime;
     const inSession = req.body.inSession;
     const groups = [];
-    const currentGroupIndex = 0; 
+    const currentGroupIndex = 0;
 
 
     const newSession = new Session({
@@ -29,10 +29,36 @@ const newSession = (req, res) => {
     });
 
     newSession.save().then((session) => {
-        res.send({_id: session._id})
+        res.send({ _id: session._id })
     }).catch((err) => {
         console.log(err)
     })
 }
 
-module.exports = {newSession};
+const addQuestionToTopic = (req, res) => {
+    const { id } = req.params;
+    const { studentId, question, name, topic } = req.body;
+
+    Session.findById(id)
+        .then((session) => {
+            const groupIndex = session.groups.findIndex((group) => group.topic === topic);
+
+            if (groupIndex !== -1) {
+                session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
+            } else {
+                session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name }] });
+            }
+
+            return session.save();
+        })
+        .then((updatedSession) => {
+            res.json(updatedSession);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: 'Could not add student question to group.' });
+        });
+
+}
+
+module.exports = { newSession, addQuestionToTopic };
