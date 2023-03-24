@@ -35,10 +35,10 @@ const getGroupsAhead = (studentId, groups) => {
 }
 
 const SessionCard = (props) => {
-    const { sessionId, professorId, title, 
+    const { _id, professorId, title, 
          school, description, location, 
-        startTime, endTime, inSession, currentGroupIndex, groups } = props; 
-
+        startTime, endTime, inSession, currentGroupIndex, groups, handleClick } = props; 
+    console.log(props);
     const [user] = useContext(UserContext);
     const groupsAhead = getGroupsAhead(user, groups);
     const meetingDate = new Date(startTime);
@@ -69,7 +69,7 @@ const SessionCard = (props) => {
                     </div>
                 </div>
                 <div className={styles.rightButton}>
-                    <button>My Topic</button>
+                    <button onClick={() => handleClick(_id)}>My Topic</button>
                 </div>
             </div>
 
