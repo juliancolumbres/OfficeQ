@@ -68,13 +68,14 @@ const addQuestionToTopic = async (req, res) => {
     const { id } = req.params;
     const { studentId, question, name, topic } = req.body;
 
+    console.log(`Session ID:`, id);
     Session.findById(id)
         .then((session) => {
+
             const groupIndex = session.groups.findIndex((group) => group.topic === topic);
-
-            const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
-
+            
             if (groupIndex !== -1) {
+                const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
                 // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
                 studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
             } else {
