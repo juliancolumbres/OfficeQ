@@ -1,4 +1,5 @@
 const Session = require('../models/session.js');
+const SSE = require('sse-express');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
@@ -92,4 +93,29 @@ const addQuestionToTopic = async (req, res) => {
         });
 }
 
-module.exports = { newSession, addQuestionToTopic, search };
+const getSessionUpdates = async (req, res) => {
+    const { session_id } = req.params;
+
+    const changeStream = Session.watch({ _id: session_id });
+    changeStream.on('change', () => {
+      Session.findOne({ _id: session_id })
+        .then((session) => {
+
+          console.log(session);
+          res.write(`data: ${JSON.stringify(session)}\n\n`);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+  
+
+    req.on('close', () => {
+      changeStream.close();
+    });
+  };
+
+
+
+
+module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates };
