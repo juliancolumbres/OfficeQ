@@ -8,7 +8,7 @@ const SSE = require('sse-express');
 // set up express
 const app = express();
 app.use(cors());
-app.use(SSE);
+// app.use(SSE);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 

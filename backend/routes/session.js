@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const sessionController = require('../controllers/session');
-const SSE = require('sse-express');
 
 router.post('/createSession', sessionController.newSession);
 router.get('/sessions', sessionController.search);
