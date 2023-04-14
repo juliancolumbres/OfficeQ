@@ -96,6 +96,13 @@ const addQuestionToTopic = async (req, res) => {
 const getSessionUpdates = async (req, res) => {
     const { session_id } = req.params;
 
+    res.set({
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Content-Type": "text/event-stream",
+      });
+      res.flushHeaders();
+
     const changeStream = Session.watch({ _id: session_id });
     changeStream.on('change', () => {
       Session.findOne({ _id: session_id })
@@ -112,6 +119,7 @@ const getSessionUpdates = async (req, res) => {
 
     req.on('close', () => {
       changeStream.close();
+      res.end();
     });
   };
 
