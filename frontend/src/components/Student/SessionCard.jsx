@@ -1,7 +1,85 @@
 import styles from "./SessionCard.module.css";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from '../../context/userContext';
 
+const SessionCard = (props) => {
+    const {
+        _id,
+        // eslint-disable-next-line no-unused-vars
+        professorId,
+        title,
+        // eslint-disable-next-line no-unused-vars
+        school,
+        description,
+        location,
+        startTime,
+        endTime,
+        inSession,
+        currentGroupIndex,
+        groups,
+        professorName,
+        handleClick
+    } = props;
+
+    const [userId] = useContext(UserContext);
+    const displayDate = getDisplayDate(startTime);
+    const displayStartTime = formatTime(startTime);
+    const displayEndTime = formatTime(endTime); 
+
+    const [updatedGroupIndex, setUpdatedGroupIndex] = useState(currentGroupIndex);
+    const [updatedGroups, setUpdatedGroups] = useState(groups);
+    const groupNumber = getGroupNumber(userId, updatedGroups);
+    const groupsAhead = groupNumber - updatedGroupIndex;
+    const totalGroups = updatedGroups.length;
+
+    // listen to changes to session
+    useEffect(() => {
+        const eventSource = new EventSource(`http://localhost:3001/session/${_id}/updates`);
+        eventSource.onmessage = (e) => {
+            const updatedSession = JSON.parse(e.data);
+
+            // if either the groups or current group index is changed, update state
+            if (updatedSession.currentGroupIndex !== updatedGroupIndex) {
+                setUpdatedGroupIndex(updatedSession.currentGroupIndex);
+            } 
+            if (JSON.stringify(updatedSession.groups) !== JSON.stringify(updatedGroups)) {
+                setUpdatedGroups(updatedSession.groups);
+            } 
+            console.log(JSON.parse(e.data));
+        }
+        return () => {
+            eventSource.close();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    return (
+        <div className={styles.card}>
+            <div className={styles.topSection}>
+                <div className={styles.leftLabels}>
+                    <p className={styles.bold}>{title}</p>
+                    <p>{props.class}</p>
+                    <p>{professorName}</p>
+                </div>
+                <div className={styles.rightLabels}>
+                    <p>{inSession ? "Live" : displayDate}</p>
+                    <p className={styles.bold}>{displayStartTime} - {displayEndTime}</p>
+                </div>
+            </div>
+            <div className={styles.bottomSection}>
+                <p>{description}</p>
+                <p>{location}</p>
+                <div className={styles.bottomThird}>
+                    {groupNumber === -1 ? <p></p> : <p className={styles.bold}>Groups ahead: {groupsAhead}</p>}
+                    {/* <p>Current Group: {(updatedGroupIndex + 1) + "/" + totalGroups}</p> */}
+                    <div className={styles.rightButton}>
+                        <button onClick={() => handleClick(_id)}>{}{groupNumber === -1 ? "Enroll" : "My Topic"}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 // convert time to format "hour:minutes AM/PM"
 const formatTime = (time) => {
@@ -22,7 +100,7 @@ const formatTime = (time) => {
     }
 }
 
-const getGroupsAhead = (studentId, groups) => {
+const getGroupNumber = (studentId, groups) => {
     let groupCounter = 0;
     for (const group of groups) {
         for (const questionObj of group.studentQuestions) {
@@ -32,50 +110,14 @@ const getGroupsAhead = (studentId, groups) => {
         }
         groupCounter++;
     }
+    return -1;
 }
 
-const SessionCard = (props) => {
-    const { _id, professorId, title, 
-         school, description, location, 
-        startTime, endTime, inSession, currentGroupIndex, groups, handleClick } = props; 
-    console.log(props);
-    const [user] = useContext(UserContext);
-    const groupsAhead = getGroupsAhead(user, groups);
+const getDisplayDate = (startTime) => {
     const meetingDate = new Date(startTime);
     const displayDate = `${meetingDate.getMonth() + 1}/${meetingDate.getDate()}`;
-
-    const displayStartTime = formatTime(startTime);
-    const displayEndTime = formatTime(endTime); 
-
-    return (
-        <div className={styles.card}>
-            <div className={styles.topSection}>
-                <div className={styles.leftLabels}>
-                    <p>{title}</p>
-                    <p>{props.class}</p>
-                    <p>{school}</p>
-                </div>
-                <div className={styles.rightLabels}>
-                    <p>{inSession ? "Live" : displayDate}</p>
-                    <p>{displayStartTime} - {displayEndTime}</p>
-                </div>
-            </div>
-            <div className={styles.bottomSection}>
-                <p>{description}</p>
-                <p>{location}</p>
-                <div className={styles.middleTextArea}>
-                    <div className={styles.middle}>
-                        <p>Groups ahead: {groupsAhead}</p>
-                    </div>
-                </div>
-                <div className={styles.rightButton}>
-                    <button onClick={() => handleClick(_id)}>My Topic</button>
-                </div>
-            </div>
-
-
-        </div>
-    )
+    return displayDate;
 }
+
 
 export default SessionCard;

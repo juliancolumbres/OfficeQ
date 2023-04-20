@@ -24,8 +24,10 @@ const SessionCard = (props) => {
 
     const {
         _id,
+        // eslint-disable-next-line no-unused-vars
         professorId,
         title,
+        // eslint-disable-next-line no-unused-vars
         school,
         description,
         location,
@@ -35,7 +37,8 @@ const SessionCard = (props) => {
         currentGroupIndex,
         groups,
         professorName,
-    } = props; 
+        handleClick
+    } = props;
 
     const meetingDate = new Date(startTime);
     const displayDate = `${meetingDate.getMonth() + 1}/${meetingDate.getDate()}`;
@@ -66,7 +69,7 @@ const SessionCard = (props) => {
                 <p>{"Topics: "+ numOfTopics}</p>
                 <p>{"Students: "+ numOfStudents}</p>
                 <div className={styles.centerButton}>
-                    <button>Manage</button>
+                    <button onClick={() => handleClick(_id)}>Manage</button>
                 </div>
             </div>
 
