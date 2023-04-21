@@ -1,0 +1,22 @@
+.theForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 350px;
+  }
+  
+  .buttonContainer {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 10px;
+  }
+  
+  .cancelBttn {
+	margin-right: 10px;
+  }
+  
+  .submitBttn {
+	margin-left: 10px;
+  }
+  
