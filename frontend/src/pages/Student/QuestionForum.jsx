@@ -20,15 +20,14 @@ const QuestionForum = () => {
     console.log(`Topic/Question: ${topic}, Description: ${description}, Student ID: ${user}`)
 
     const questionData = {
-        studentId: user, // obtain the studentID
+        studentId: user,
         question: description,
-        //name: fetchedName, // obtain the name
         topic: topic
     };
 
     console.log(`Question Data:`, questionData);
     console.log(`Session ID:`, sessionId);
-    
+
     try {
         const response = await axios.put(`http://localhost:3001/session/${sessionId}/addQuestionToTopic`, questionData);
         console.log(response.data);
@@ -60,7 +59,7 @@ const QuestionForum = () => {
                 <label>
                     Or </label>
                 <label>
-                    Enter Desired Topic/Question:
+                    Select Existing Topic/Question:
                     <select value={topic} onChange={(event) => setTopic(event.target.value)}>
                     <option value="">--Select a topic--</option>
                     {topics.map((topic) => (
