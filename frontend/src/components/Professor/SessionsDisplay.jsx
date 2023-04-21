@@ -12,9 +12,9 @@ const SessionsDisplay = () => {
 
 
 
-    const navigateToForm = (sessionId) => {
+    const navigateToSessionManagement = (sessionId) => {
         console.log("click");
-        navigate(`/student/sessions/${sessionId}/forum`);
+        navigate(`/professor/sessions/${sessionId}/manage`);
     }
     console.log("rendered")
 
@@ -44,7 +44,7 @@ const SessionsDisplay = () => {
             <div className={styles.container}>
                 <div className={styles.displayGrid}>
                     {sessions.map((data) => (
-                       <SessionCard {...data} handleClick={navigateToForm}/>
+                       <SessionCard {...data} handleClick={navigateToSessionManagement}/>
                     ))}
                 </div>
             </div>
