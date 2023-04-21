@@ -76,17 +76,11 @@ const addQuestionToTopic = async (req, res) => {
     console.log(`Session ID:`, id);
     Session.findById(id)
         .then((session) => {
-<<<<<<< HEAD
-=======
-            const groupIndex = session.groups.findIndex((group) => group.topic === topic);
-
-            // const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
->>>>>>> 7f774f7 (small changes)
 
             const groupIndex = session.groups.findIndex((group) => group.topic === topic);
             
             if (groupIndex !== -1) {
-                const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
+                // const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
                 // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
                 const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
                 studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
