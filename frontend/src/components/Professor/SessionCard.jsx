@@ -22,15 +22,32 @@ const formatTime = (time) => {
 
 const SessionCard = (props) => {
 
-    const { sessionId, professorId, professorName, title, 
-         school, description, location, 
-        startTime, endTime, inSession } = props; 
+    const {
+        _id,
+        professorId,
+        title,
+        school,
+        description,
+        location,
+        startTime,
+        endTime,
+        inSession,
+        currentGroupIndex,
+        groups,
+        professorName,
+    } = props; 
 
     const meetingDate = new Date(startTime);
     const displayDate = `${meetingDate.getMonth() + 1}/${meetingDate.getDate()}`;
 
     const displayStartTime = formatTime(startTime);
     const displayEndTime = formatTime(endTime); 
+    const numOfStudents = getStudentCount(groups);
+    const numOfTopics = groups.length;
+
+    console.log(groups);
+    console.log(groups.length);
+    console.log(getStudentCount(groups));
 
     return (
         <div className={styles.card}>
@@ -46,8 +63,8 @@ const SessionCard = (props) => {
                 </div>
             </div>
             <div className={styles.bottomSection}>
-                <p>{description}</p>
-                <p>{location}</p>
+                <p>{"Topics: "+ numOfTopics}</p>
+                <p>{"Students: "+ numOfStudents}</p>
                 <div className={styles.centerButton}>
                     <button>Manage</button>
                 </div>
@@ -57,5 +74,11 @@ const SessionCard = (props) => {
         </div>
     )
 }
-
+    const getStudentCount = (groups) => {
+        let counter = 0;
+        for(let i=0; i<(groups.length); i++){
+            counter += groups[i].studentQuestions.length;
+        }
+        return counter;
+    }
 export default SessionCard;
