@@ -4,7 +4,8 @@ const StudentQuestions = mongoose.Schema(
     {
         studentId: { type: String },
         question: { type: String },
-        name: { type: String }
+        name: { type: String },
+        privateMeeting: { type: Boolean }
     }
 )
 

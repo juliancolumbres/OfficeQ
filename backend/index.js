@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-const SSE = require('sse-express');
+// const SSE = require('sse-express');
+
 // set up express
 const app = express();
 app.use(cors());
