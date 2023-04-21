@@ -3,12 +3,19 @@ import { UserContext } from '../../context/userContext';
 import SessionCard from "./SessionCard.jsx";
 import axios from "axios";
 import styles from "./SessionsDisplay.module.css";
+import { useNavigate } from "react-router-dom";
 
 const SessionsDisplay = () => {
     const [user] = useContext(UserContext);
     const [sessions, setSessions] = useState([]);
+    const navigate = useNavigate();
 
 
+
+    const navigateToSessionManagement = (sessionId) => {
+        console.log("click");
+        navigate(`/professor/sessions/${sessionId}/manage`);
+    }
     console.log("rendered")
 
     const getSessions = async (userId) => {
@@ -37,13 +44,14 @@ const SessionsDisplay = () => {
             <div className={styles.container}>
                 <div className={styles.displayGrid}>
                     {sessions.map((data) => (
-                        <SessionCard {...data} />
+                       <SessionCard {...data} handleClick={navigateToSessionManagement}/>
                     ))}
                 </div>
             </div>
         </div>
     )
 }
+
 
 
 export default SessionsDisplay;

@@ -1,4 +1,5 @@
 const Session = require('../models/session.js');
+const SSE = require('sse-express');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
@@ -39,6 +40,10 @@ const newSession = (req, res) => {
     })
 }
 
+// const getSession = (req, res) => {
+//     const 
+// }
+
 const search = (req, res) => {
     const professorName = req.query.professorName;
     const className = req.query.className;
@@ -75,8 +80,9 @@ const addQuestionToTopic = async (req, res) => {
             const groupIndex = session.groups.findIndex((group) => group.topic === topic);
             
             if (groupIndex !== -1) {
-                const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
+                // const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
                 // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
+                const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
                 studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
             } else {
                 session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name }] });
@@ -92,4 +98,37 @@ const addQuestionToTopic = async (req, res) => {
         });
 }
 
-module.exports = { newSession, addQuestionToTopic, search };
+const getSessionUpdates = async (req, res) => {
+    const { session_id } = req.params;
+
+    res.set({
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Content-Type": "text/event-stream",
+      });
+      res.flushHeaders();
+
+    const changeStream = Session.watch({ _id: session_id });
+    changeStream.on('change', () => {
+      Session.findOne({ _id: session_id })
+        .then((session) => {
+
+          console.log(session);
+          res.write(`data: ${JSON.stringify(session)}\n\n`);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+  
+
+    req.on('close', () => {
+      changeStream.close();
+      res.end();
+    });
+  };
+
+
+
+
+module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates };
