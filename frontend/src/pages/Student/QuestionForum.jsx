@@ -11,10 +11,7 @@ const QuestionForum = () => {
   const [user] = useContext(UserContext);
   const { sessionId } = useParams();
   const [privateMeeting, setIsPrivate] = useState(false); // state variable for toggling private meeting
-<<<<<<< Updated upstream
   const [topicList, setTopicList] = useState([]);
-=======
->>>>>>> Stashed changes
 //   const response = await axios.get(`http://localhost:3001/user/${user}/name`);
 //   const fetchedName = response.data.name;
 
