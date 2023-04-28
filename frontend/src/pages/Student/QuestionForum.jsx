@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import './QuestionForum.css';
 import axios from 'axios';
 import { UserContext } from '../../context/userContext';
@@ -10,6 +10,8 @@ const QuestionForum = () => {
   const [description, setDescription] = useState('');
   const [user] = useContext(UserContext);
   const { sessionId } = useParams();
+  const [privateMeeting, setIsPrivate] = useState(false); // state variable for toggling private meeting
+  const [topicList, setTopicList] = useState([]);
 //   const response = await axios.get(`http://localhost:3001/user/${user}/name`);
 //   const fetchedName = response.data.name;
 
@@ -17,12 +19,13 @@ const QuestionForum = () => {
   // clicks the submit button and logs the selected topic and description to the console. 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`Topic/Question: ${topic}, Description: ${description}, Student ID: ${user}`)
+    console.log(`Topic/Question: ${topic}, Description: ${description}, Student ID: ${user}, Private Meeting: ${privateMeeting}`)
 
     const questionData = {
         studentId: user,
         question: description,
-        topic: topic
+        topic: topic,
+        isPrivate: privateMeeting,
     };
 
     console.log(`Question Data:`, questionData);
@@ -45,7 +48,20 @@ const QuestionForum = () => {
     setDescription('');
   };
 
-  const topics = ['Topic 1', 'Topic 2', 'Topic 3'];
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/session/${sessionId}/getAllTopics`);
+        setTopicList(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchTopics();
+  }, [sessionId]);
+
+  //const topics = ['Topic 1', 'Topic 2', 'Topic 3'];
 
   return (
     <div>
@@ -62,7 +78,7 @@ const QuestionForum = () => {
                     Select Existing Topic/Question:
                     <select value={topic} onChange={(event) => setTopic(event.target.value)}>
                     <option value="">--Select a topic--</option>
-                    {topics.map((topic) => (
+                    {topicList.map((topic) => (
                         <option key={topic} value={topic}>{topic}</option>
                     ))}
                     </select>
@@ -72,7 +88,11 @@ const QuestionForum = () => {
                     Topic/Question description:
                     <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
                 </label>
-                <br />
+                <label className="privateMeetingLabel">
+            Private meeting?
+            <button className={`privateMeetingButton ${privateMeeting ? "privateMeetingButton--active" : ""}`}
+              type="button" onClick={() => setIsPrivate(!privateMeeting)}>{privateMeeting ? "Yes" : "No"}</button>
+          </label>
                 <div className="buttonContainer">
                     <button className='cancelBttn' type="button" onClick={handleCancel}>Cancel</button>
                     <button className='submitBttn' type="submit">Submit</button>
@@ -82,4 +102,10 @@ const QuestionForum = () => {
     </div>
   );
 }
+//<label className="privateMeetingLabel">
+ //                       Private meeting?
+ //                       <input className="privateMeetingCheckbox" type="checkbox" checked={isPrivate} onChange={(event) => setIsPrivate(event.target.checked)} />
+ //                   Yes
+ //                   </label>
+ //               <br />
 export default QuestionForum;
