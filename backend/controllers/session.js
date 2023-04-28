@@ -122,4 +122,19 @@ const getSessionUpdates = async (req, res) => {
     });
 };
 
-module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates };
+const getAllTopics = (req, res) => {
+    const { id } = req.params;
+
+    Session.findById(id)
+        .then((sessions) => {
+            const allTopics = sessions.groups.map(session => session.topic);
+            res.send(allTopics);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+};
+
+module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };
