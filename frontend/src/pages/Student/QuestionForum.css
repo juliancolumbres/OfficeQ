@@ -20,3 +20,27 @@
 	margin-left: 10px;
   }
   
+  .privateMeetingButton {
+	width: 80px;
+	height: 40px;
+	border-radius: 20px;
+	font-size: 16px;
+	color: white;
+	text-align: center;
+	background-color: grey;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	margin-left: 10px;
+	margin-top: 10px;
+  }
+  
+  .privateMeetingButton.privateMeetingButton--active {
+	background-color: green;
+  }
+  
+  .privateMeetingLabel {
+	display: flex;
+	align-items: center;
+  }
+  
