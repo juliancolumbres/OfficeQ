@@ -1,5 +1,5 @@
 const Session = require('../models/session.js');
-const SSE = require('sse-express');
+// const SSE = require('sse-express');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
@@ -40,10 +40,6 @@ const newSession = (req, res) => {
     })
 }
 
-// const getSession = (req, res) => {
-//     const 
-// }
-
 const search = (req, res) => {
     const professorName = req.query.professorName;
     const className = req.query.className;
@@ -71,21 +67,19 @@ const search = (req, res) => {
 
 const addQuestionToTopic = async (req, res) => {
     const { id } = req.params;
-    const { studentId, question, name, topic } = req.body;
+    const { studentId, question, name, privateMeeting, topic } = req.body;
 
     console.log(`Session ID:`, id);
     Session.findById(id)
         .then((session) => {
 
             const groupIndex = session.groups.findIndex((group) => group.topic === topic);
-            
+
             if (groupIndex !== -1) {
-                // const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
-                // session.groups[groupIndex].studentQuestions.push({ studentId: studentId, question: question, name: name });
                 const studentQuestionsIndex = session.groups[groupIndex].studentQuestions;
-                studentQuestionsIndex.push({ studentId: studentId, question: question, name: name });
+                studentQuestionsIndex.push({ studentId: studentId, question: question, name: name, privateMeeting: privateMeeting });
             } else {
-                session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name }] });
+                session.groups.push({ topic, studentQuestions: [{ studentId: studentId, question: question, name: name, privateMeeting: privateMeeting }] });
             }
             return session.save();
         })
@@ -105,30 +99,42 @@ const getSessionUpdates = async (req, res) => {
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
         "Content-Type": "text/event-stream",
-      });
-      res.flushHeaders();
+    });
+    res.flushHeaders();
 
     const changeStream = Session.watch({ _id: session_id });
     changeStream.on('change', () => {
-      Session.findOne({ _id: session_id })
-        .then((session) => {
+        Session.findOne({ _id: session_id })
+            .then((session) => {
 
-          console.log(session);
-          res.write(`data: ${JSON.stringify(session)}\n\n`);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+                console.log(session);
+                res.write(`data: ${JSON.stringify(session)}\n\n`);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     });
-  
+
 
     req.on('close', () => {
-      changeStream.close();
-      res.end();
+        changeStream.close();
+        res.end();
     });
-  };
+};
 
+const getAllTopics = (req, res) => {
+    const { id } = req.params;
 
+    Session.findById(id)
+        .then((sessions) => {
+            const allTopics = sessions.groups.map(session => session.topic);
+            res.send(allTopics);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+};
 
-
-module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates };
+module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };
