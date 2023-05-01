@@ -13,6 +13,7 @@ const QuestionForum = () => {
   const { sessionId } = useParams();
   const [privateMeeting, setIsPrivate] = useState(false); // state variable for toggling private meeting
   const [topicList, setTopicList] = useState([]);
+  const navigate = useNavigate();
 //   const response = await axios.get(`http://localhost:3001/user/${user}/name`);
 //   const fetchedName = response.data.name;
 
