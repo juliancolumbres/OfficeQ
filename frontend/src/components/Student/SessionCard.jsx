@@ -56,6 +56,7 @@ const SessionCard = (props) => {
 
     useEffect(() => {
         setGroupsAheadDisplayText(getGroupsAheadDisplayText(groupsAhead))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatedGroupIndex])
 
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styles from "./SessionCard.module.css";
 
 // convert time to format "hour:minutes AM/PM"
