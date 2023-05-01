@@ -3,6 +3,7 @@ import './QuestionForum.css';
 import axios from 'axios';
 import { UserContext } from '../../context/userContext';
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const QuestionForum = () => {
 // useState hook is used to keep track of the selected topic and the description of the topic
@@ -35,6 +36,7 @@ const QuestionForum = () => {
         const response = await axios.put(`http://localhost:3001/session/${sessionId}/addQuestionToTopic`, questionData);
         console.log(response.data);
         // displaying success message
+        navigate(`/student/dashboard`);
       } catch (error) {
         console.error(error);
         // handeling errors
@@ -46,6 +48,7 @@ const QuestionForum = () => {
   const handleCancel = () => {
     setTopic('');
     setDescription('');
+    navigate(`/student/dashboard`);
   };
 
   useEffect(() => {
