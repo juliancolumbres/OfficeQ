@@ -148,4 +148,38 @@ const getAllTopics = (req, res) => {
         });
 };
 
-module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };
+const mergeGroups = (req, res) => {
+    const { session_id } = req.params;
+    const { groupIndexes } = req.body;
+    Session.findById(session_id)
+        .populate({
+            path: 'groups.studentQuestions',
+            model: 'studentQuestions'
+        })
+        .then((session) => {
+            const groups = session.groups;
+            const firstIndex = groupIndexes[0];
+            for (let i = 1; i < groupIndexes.length; i++) {
+                const groupIndex = groupIndexes[i];
+                for (const question of groups[groupIndex].studentQuestions) {
+                    copiedQuestion = JSON.parse(JSON.stringify(question.toObject()))
+                    groups[firstIndex].studentQuestions.push(copiedQuestion);
+                }
+            }
+            for (let i = 1; i < groupIndexes.length; i++) {
+                const groupIndex = groupIndexes[i];
+                const offset = i - 1;
+                groups.splice(groupIndex - offset, 1);
+            }
+            session.markModified('groups');
+            session.save();
+
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+};
+
+module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups };
