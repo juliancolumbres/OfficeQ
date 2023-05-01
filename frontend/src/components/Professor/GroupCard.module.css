@@ -1,0 +1,43 @@
+.card {
+    background-color : lightgray;
+    min-height: 14em;
+    width: 50em;
+    border-radius: 1%;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    filter: none;
+}
+
+.selected {
+    background-color: #307EB6;;
+}
+
+.topSection {
+    height: 30%;
+}
+
+.bottomSection {
+    border-top: medium dotted grey;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.nextButton {
+    width: fit-content;
+    border-radius: 10%;
+    background-color: #307EB6;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.buttonSection {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}

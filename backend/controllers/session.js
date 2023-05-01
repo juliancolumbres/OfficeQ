@@ -40,6 +40,17 @@ const newSession = (req, res) => {
     })
 }
 
+const getSession = (req, res) => {
+    const { session_id } = req.params;
+    Session.findOne({ _id : session_id}).then((session) => {
+        res.send(session);
+    }).catch((err) => {
+        res.status(500);
+        res.send({ error: "internal server error" });
+        console.log(err)
+    })
+}
+
 const search = (req, res) => {
     const professorName = req.query.professorName;
     const className = req.query.className;
@@ -137,4 +148,4 @@ const getAllTopics = (req, res) => {
         });
 };
 
-module.exports = { newSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };
+module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };

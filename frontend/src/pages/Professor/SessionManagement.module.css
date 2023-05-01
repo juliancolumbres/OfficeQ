@@ -1,0 +1,42 @@
+.cardsContainer {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.manageButtons {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 2em;
+}
+
+.manageButtons button {
+    border-radius: 10%;
+    background-color: #307EB6;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.confirmButtons {
+    display: flex;
+    gap: 2em;
+}
+
+.cardsContainer button {
+    text-align: left;
+    padding: 0;
+    visibility: visible;
+    border-radius: 1%;
+}
+
+.cardsContainer button:disabled {
+  opacity: 1;
+  filter: none;
+  background-color: black;
+  color: none;
+  color: black;
+}
+

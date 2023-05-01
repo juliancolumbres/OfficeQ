@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styles from "./SessionCard.module.css";
 
 // convert time to format "hour:minutes AM/PM"
@@ -24,10 +25,8 @@ const SessionCard = (props) => {
 
     const {
         _id,
-        // eslint-disable-next-line no-unused-vars
         professorId,
         title,
-        // eslint-disable-next-line no-unused-vars
         school,
         description,
         location,
@@ -47,10 +46,6 @@ const SessionCard = (props) => {
     const displayEndTime = formatTime(endTime); 
     const numOfStudents = getStudentCount(groups);
     const numOfTopics = groups.length;
-
-    console.log(groups);
-    console.log(groups.length);
-    console.log(getStudentCount(groups));
 
     return (
         <div className={styles.card}>

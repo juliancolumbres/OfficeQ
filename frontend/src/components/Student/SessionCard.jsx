@@ -30,7 +30,9 @@ const SessionCard = (props) => {
     const [updatedGroups, setUpdatedGroups] = useState(groups);
     const groupNumber = getGroupNumber(userId, updatedGroups);
     const groupsAhead = groupNumber - updatedGroupIndex;
-    const totalGroups = updatedGroups.length;
+    const [groupsAheadDisplayText, setGroupsAheadDisplayText] = useState(getGroupsAheadDisplayText(groupsAhead));
+    console.log(updatedGroupIndex);
+    console.log("Text: " + groupsAheadDisplayText);
 
     // listen to changes to session
     useEffect(() => {
@@ -42,16 +44,20 @@ const SessionCard = (props) => {
             if (updatedSession.currentGroupIndex !== updatedGroupIndex) {
                 setUpdatedGroupIndex(updatedSession.currentGroupIndex);
             } 
-            if (JSON.stringify(updatedSession.groups) !== JSON.stringify(updatedGroups)) {
+            else if (JSON.stringify(updatedSession.groups) !== JSON.stringify(updatedGroups)) {
                 setUpdatedGroups(updatedSession.groups);
-            } 
-            console.log(JSON.parse(e.data));
+            }         
         }
         return () => {
             eventSource.close();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        setGroupsAheadDisplayText(getGroupsAheadDisplayText(groupsAhead))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updatedGroupIndex])
 
     return (
         <div className={styles.card}>
@@ -62,7 +68,7 @@ const SessionCard = (props) => {
                     <p>{professorName}</p>
                 </div>
                 <div className={styles.rightLabels}>
-                    <p>{inSession ? "Live" : displayDate}</p>
+                    {inSession ? <p className={styles.bold} style={{ color :'red'}}>Live</p> : <p>{displayDate}</p>}
                     <p className={styles.bold}>{displayStartTime} - {displayEndTime}</p>
                 </div>
             </div>
@@ -70,8 +76,7 @@ const SessionCard = (props) => {
                 <p>{description}</p>
                 <p>{location}</p>
                 <div className={styles.bottomThird}>
-                    {groupNumber === -1 ? <p></p> : <p className={styles.bold}>Groups ahead: {groupsAhead}</p>}
-                    {/* <p>Current Group: {(updatedGroupIndex + 1) + "/" + totalGroups}</p> */}
+                    <p className={styles.bold}>{groupsAheadDisplayText}</p>
                     <div className={styles.rightButton}>
                         <button onClick={() => handleClick(_id)}>{}{groupNumber === -1 ? "Enroll" : "My Topic"}</button>
                     </div>
@@ -79,6 +84,24 @@ const SessionCard = (props) => {
             </div>
         </div>
     )
+}
+
+const getGroupsAheadDisplayText = (groupsAhead) => {
+
+    console.log("TEST:  " + groupsAhead);
+
+    if (groupsAhead < 0) {
+        return " ";
+    }
+    else if (groupsAhead === 0) {
+        return "Its your turn!";
+    }
+    else if (groupsAhead === 1) {
+        return "Up next!";
+    }
+    else {
+        return "Groups ahead: " + groupsAhead;
+    }
 }
 
 // convert time to format "hour:minutes AM/PM"
