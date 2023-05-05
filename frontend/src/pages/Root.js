@@ -10,6 +10,7 @@ export default function Root() {
           Office<span class="colored-letter">Q</span>
         </span>
       </h1>
+     
       <button className= "studentBttn">
         <Link to={'/student'} className="button">Are you a student?</Link>
       </button>

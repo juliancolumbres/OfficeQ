@@ -23,7 +23,7 @@ body {
 	display: flex;
 	letter-spacing: -0.017em;
 	color: #307EB6;
-	margin-top: 200px; /* optional, to add more space */
+	margin-top: 400px; /* optional, to add more space */
 }
 
 .studentBttn{
@@ -46,5 +46,12 @@ body {
     height: 50px;
     font-size: 20px;
     margin-left: 10px; /* adds some separation */
-	margin-top: 200px;
+	margin-top: 100px;
+}
+
+.description{
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 500px;
+	margin-right: 500px;
 }
