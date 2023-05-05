@@ -18,7 +18,7 @@ export default function ProfessorDashboard() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>OfficeQ</h1>
+            <span class = "logo">Office<span class="colored-letter">Q</span></span>
             </div>
             <div className={styles.dashboardBody}>
                 <div className={styles.toggleButton}> 

@@ -19,7 +19,7 @@ export default function StudentDashboard() {
     return (
         <div className="dashboard-container">
             <div className="dashboard-header">
-                <h1>OfficeQ</h1>
+            <span class = "logo">Office<span class="colored-letter">Q</span></span>
             </div>
             <div className="dashboard-body">
                 <div className="toggle-button"> 
