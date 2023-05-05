@@ -1,0 +1,57 @@
+/* Style for the entire page */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100vh;
+	position: relative;
+}
+
+.logo{
+	align-items: center;
+	padding-right: 100px;
+}
+
+.welcome{
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 60px;
+	display: flex;
+	letter-spacing: -0.017em;
+	color: #307EB6;
+	margin-top: 400px; /* optional, to add more space */
+}
+
+.studentBttn{
+	display: inline-block;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 40%;
+    height: 50px;
+    font-size: 20px;
+    margin-right: 10px; /* add some separation */
+}
+
+.profBttn{
+	display: inline-block;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 40%;
+    height: 50px;
+    font-size: 20px;
+    margin-left: 10px; /* adds some separation */
+	margin-top: 100px;
+}
+
+.description{
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 500px;
+	margin-right: 500px;
+}
