@@ -1,5 +1,4 @@
 const Session = require('../models/session.js');
-// const SSE = require('sse-express');
 
 const newSession = (req, res) => {
     const professorId = req.body.professorId;
@@ -34,7 +33,8 @@ const newSession = (req, res) => {
     });
 
     newSession.save().then((session) => {
-        res.send({ _id: session._id })
+        res.send({ _id: session._id });
+        res.status(200);
     }).catch((err) => {
         console.log(err)
     })
@@ -42,8 +42,9 @@ const newSession = (req, res) => {
 
 const getSession = (req, res) => {
     const { session_id } = req.params;
-    Session.findOne({ _id : session_id}).then((session) => {
+    Session.findOne({ _id: session_id }).then((session) => {
         res.send(session);
+        res.status(200);
     }).catch((err) => {
         res.status(500);
         res.send({ error: "internal server error" });

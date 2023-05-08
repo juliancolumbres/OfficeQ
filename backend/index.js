@@ -4,12 +4,10 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3001;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-// const SSE = require('sse-express');
 
 // set up express
 const app = express();
 app.use(cors());
-// app.use(SSE);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -32,6 +30,4 @@ const sessionRoutes = require('./routes/session');
 app.use('/session', sessionRoutes);
 app.use('/user', userRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+module.exports = app;

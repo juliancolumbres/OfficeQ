@@ -7,7 +7,7 @@ const newUser = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const userRole = req.body.userRole;
-    
+
     const newUser = new User({
         university: university,
         name: name,
@@ -24,6 +24,7 @@ const newUser = (req, res) => {
         else {
             newUser.save().then((user) => {
                 res.send({ user_id: user._id });
+                res.status(200);
             }).catch((err) => {
                 res.status(500);
                 res.send({ error: "internal server error" });
@@ -42,13 +43,14 @@ const findUser = (req, res) => {
     const password = req.body.password;
     const userRole = req.body.userRole;
 
-    User.findOne({email: email, userRole: userRole }).then((user) => {
+    User.findOne({ email: email, userRole: userRole }).then((user) => {
         if (user == null || password !== user.password) {
             res.status(401);
-            res.send({error: "invalid email/password"});
+            res.send({ error: "invalid email/password" });
         }
         else {
-            res.send({user_id: user._id});
+            res.send({ user_id: user._id });
+            res.status(200);
         }
     }).catch((err) => {
         res.status(500);
@@ -59,8 +61,9 @@ const findUser = (req, res) => {
 
 const getName = (req, res) => {
     const userId = req.params.userId;
-    User.findOne({_id: userId}).then((user) => {
-        res.send({name: user.name});
+    User.findOne({ _id: userId }).then((user) => {
+        res.send({ name: user.name });
+        res.status(200);
     }).catch((err) => {
         res.status(500);
         res.send({ error: "internal server error" });
@@ -70,8 +73,8 @@ const getName = (req, res) => {
 
 const getUniversity = (req, res) => {
     const userId = req.params.userId;
-    User.findOne({_id: userId}).then((user) => {
-        res.send({university: user.university});
+    User.findOne({ _id: userId }).then((user) => {
+        res.send({ university: user.university });
     }).catch((err) => {
         res.status(500);
         res.send({ error: "internal server error" });
@@ -81,7 +84,7 @@ const getUniversity = (req, res) => {
 
 const getSessions = (req, res) => {
     const userId = req.params.userId;
-    Session.find({professorId: userId}).then((sessions) => {
+    Session.find({ professorId: userId }).then((sessions) => {
         res.send(sessions);
     }).catch((err) => {
         res.status(500);
@@ -93,17 +96,17 @@ const getSessions = (req, res) => {
 
 const getSessionsEnrolled = (req, res) => {
     const userId = req.params.userId;
-    
+
     const query = {
         groups: {
-          $elemMatch: {
-            studentQuestions: {
-              $elemMatch: { studentId: userId }
+            $elemMatch: {
+                studentQuestions: {
+                    $elemMatch: { studentId: userId }
+                }
             }
-          }
         }
-      };
-    
+    };
+
     Session.find(query).then((sessions) => {
         res.send(sessions);
     }).catch((err) => {
@@ -117,4 +120,4 @@ const getSessionsEnrolled = (req, res) => {
 
 
 
-module.exports = {newUser, findUser, getName, getUniversity, getSessions, getSessionsEnrolled};
+module.exports = { newUser, findUser, getName, getUniversity, getSessions, getSessionsEnrolled };
