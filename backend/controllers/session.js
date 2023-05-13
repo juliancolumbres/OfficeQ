@@ -164,6 +164,22 @@ const startMeeting = (req, res) => {
         });
 }
 
+const nextTopic = (req, res) => {
+    const { id } = req.params;
+
+    Session.findById(id)
+        .then((session) => {
+            session.currentGroupIndex += 1;
+            session.save();
+            res.send(session);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+}
+
 
 const deleteMeeting = (req, res) => {
     const { id } = req.params;
@@ -223,4 +239,4 @@ const mergeGroups = (req, res) => {
         });
 };
 
-module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups, startMeeting, deleteMeeting };
+module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups, startMeeting, deleteMeeting, nextTopic };

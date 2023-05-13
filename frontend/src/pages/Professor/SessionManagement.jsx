@@ -128,6 +128,7 @@ const SessionManagement = (props) => {
     }
 
     const handleNextClick = () => {
+        axios.patch(`http://localhost:3001/session/${sessionId}/nextTopic`);
         setCurrentGroupIndex(currentGroupIndex + 1);
     }
     
