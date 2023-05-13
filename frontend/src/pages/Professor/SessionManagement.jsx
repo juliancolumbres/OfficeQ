@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import GroupCard from "../../components/Professor/GroupCard.jsx";
 import styles from "./SessionManagement.module.css";
+import { useNavigate } from "react-router-dom";
 
 const SessionManagement = (props) => {
-
+    const navigate = useNavigate();
     const { sessionId } = useParams();
     const [groups, setGroups] = useState([]);
     const [selectedIndexes, setSelectedIndexes] = useState(new Array(groups.length).fill(false));
     const [groupToggle, setGroupToggle] = useState(false);
     const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
+    const [hasStarted, setHasStarted] = useState(false);
 
 
     const getGroups = async (sessionId) => {
@@ -27,6 +29,7 @@ const SessionManagement = (props) => {
             .then((fetchedSession) => {
                 setGroups(fetchedSession.groups)
                 setCurrentGroupIndex(fetchedSession.currentGroupIndex);
+                setHasStarted(fetchedSession.inSession);
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
@@ -106,18 +109,46 @@ const SessionManagement = (props) => {
         setSelectedIndexes(new Array(groups.length).fill(false))
         setGroupToggle(false);
         setGroups(updatedGroups);
+
+        const selectedIndexesArray = [];
+        for (let i = 0; i < selectedIndexes.length; i++) {
+            if (selectedIndexes[i] === true) {
+                selectedIndexesArray.push(i);
+            }
+        }
+        const body = {"groupIndexes" : selectedIndexesArray};
+        axios.patch(`http://localhost:3001/session/${sessionId}/merge`, body)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        //console.log(body);
     }
 
     const handleNextClick = () => {
         setCurrentGroupIndex(currentGroupIndex + 1);
+    }
+    
+    const handleStartClick = () => {
+        axios.patch(`http://localhost:3001/session/${sessionId}/start`);
+        setHasStarted(true);
+    }
+
+    const handleCancelClick = () => {
+        setSelectedIndexes(new Array(groups.length).fill(false))
+        setGroupToggle(!groupToggle);
+        axios.delete(`http://localhost:3001/session/${sessionId}`);
+        navigate(`/professor/dashboard`);
     }
 
     return (
         <div>
             <span class = "logo">Office<span class="colored-letter">Q</span></span>
             <div className={styles.manageButtons}>
-                <button>Start Meeting</button>
-                <button>Cancel Meeting</button>
+                <button hidden={hasStarted} onClick={handleStartClick}>Start Meeting</button>
+                <button onClick={handleCancelClick}>Cancel Meeting</button>
                 <button onClick={handleGroupClick}>Merge Groups</button>
                 <div className={styles.confirmButtons} hidden={!groupToggle}>
                     <button hidden={getSelectedCount(selectedIndexes) < 2}onClick={handleConfirmClick}>Confirm Merge</button>

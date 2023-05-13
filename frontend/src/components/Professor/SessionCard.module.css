@@ -1,4 +1,4 @@
-.card {
+/* .card {
     background-color : lightgray;
     height: 14em;
     width: 30em;
@@ -49,4 +49,98 @@
 
 .rightLabels p {
     margin: 0;
+} */
+
+
+
+
+
+.card {
+    background-color : lightgray;
+    height: 14em;
+    width: 50em;
+    border-radius: 1%;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.topSection {
+    height: 50%;
+    display: flex;
+}
+
+.bottomSection {
+    border-top: medium dotted grey;
+    display: flex;
+    flex-direction: column;
+    /* text-align: left; */
+    padding-top: .3em;
+}
+
+.middleTextArea { 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bottomSection button {
+    width: 7em;
+}
+
+.topSection > .leftLabels {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: .3em;
+    padding-bottom: .3em;
+}
+
+.leftLabels p {
+    margin: 0;
+}
+
+.topSection > .rightLabels {
+    width: 50%;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-bottom: .3em;
+}
+
+.rightLabels p {
+    margin: 0;
+}
+
+.bottomThird {
+    /* background-color: aliceblue; */
+    display: flex;
+    /* flex-direction: row-reverse; */
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+/* .middleText {
+    margin-right: auto;
+} */
+
+.rightButton button{
+    /* display: block; */
+    border-radius: 10%;
+    background-color: #307EB6;
+    font-weight: bold;
+    color: #ffffff;
+    /* width: 60%;
+    height: 50px; */
+    /* margin: auto; */
+    /* font-size: 20px; */
+    /* margin-bottom: 10px;
+    margin-top: 80px;
+} */
+}
+
+.bold {
+    font-weight: bold;
 }

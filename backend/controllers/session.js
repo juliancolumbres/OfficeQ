@@ -148,6 +148,47 @@ const getAllTopics = (req, res) => {
         });
 };
 
+const startMeeting = (req, res) => {
+    const { id } = req.params;
+
+    Session.findById(id)
+        .then((session) => {
+            session.inSession = true;
+            session.save();
+            res.send(session);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+}
+
+
+const deleteMeeting = (req, res) => {
+    const { id } = req.params;
+    Session.findById(id)
+        .then((session) => {
+            if (session == null) {
+                res.status(404);
+                res.send({ error: "Session not found" });
+            } else {
+                console.log("Session found");
+                Session.deleteOne({ _id: id })
+                .then(() => {
+                    res.send({"message": "success"});
+                })
+                .catch((err) => {
+                    res.status(500);
+                    res.send({ error: "internal server error" });
+                    console.log(err);
+                });
+            }
+        })
+
+    
+}
+
 const mergeGroups = (req, res) => {
     const { session_id } = req.params;
     const { groupIndexes } = req.body;
@@ -182,4 +223,4 @@ const mergeGroups = (req, res) => {
         });
 };
 
-module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups };
+module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups, startMeeting, deleteMeeting };
