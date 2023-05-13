@@ -15,7 +15,7 @@
    d. Once all the dependencies are installed, run the command (npm start) to start the backend server <br>
 
 3. Starting the Frontend server<br>
-   a. Open the terminal inside Visual Studio Code, and make sure to be inside the frontend directory by using this command inside the terminal: <br>
+   a. Open the terminal inside Visual Studio Code, and make sure to be inside the frontend directory by using this command inside the terminal: (cd frontend) <br>
    b. Once inside the frontend folder, install all dependencies by using the following command: (npm install) <br>
    c. Once all the dependencies are installed, run the command (npm start) to start the frontend server<br>
    d. After starting the frontend server, the OfficeQ folder should open in your preferred browser<br>
