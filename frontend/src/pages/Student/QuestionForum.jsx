@@ -27,7 +27,7 @@ const QuestionForum = () => {
         studentId: user,
         question: description,
         topic: topic,
-        isPrivate: privateMeeting,
+        privateMeeting: privateMeeting,
     };
 
     console.log(`Question Data:`, questionData);

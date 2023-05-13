@@ -148,4 +148,95 @@ const getAllTopics = (req, res) => {
         });
 };
 
-module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics };
+const startMeeting = (req, res) => {
+    const { id } = req.params;
+
+    Session.findById(id)
+        .then((session) => {
+            session.inSession = true;
+            session.save();
+            res.send(session);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+}
+
+const nextTopic = (req, res) => {
+    const { id } = req.params;
+
+    Session.findById(id)
+        .then((session) => {
+            session.currentGroupIndex += 1;
+            session.save();
+            res.send(session);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+}
+
+
+const deleteMeeting = (req, res) => {
+    const { id } = req.params;
+    Session.findById(id)
+        .then((session) => {
+            if (session == null) {
+                res.status(404);
+                res.send({ error: "Session not found" });
+            } else {
+                console.log("Session found");
+                Session.deleteOne({ _id: id })
+                .then(() => {
+                    res.send({"message": "success"});
+                })
+                .catch((err) => {
+                    res.status(500);
+                    res.send({ error: "internal server error" });
+                    console.log(err);
+                });
+            }
+        })
+
+    
+}
+
+const mergeGroups = (req, res) => {
+    const { session_id } = req.params;
+    const { groupIndexes } = req.body;
+    Session.findById(session_id)
+        .populate({
+            path: 'groups.studentQuestions',
+            model: 'studentQuestions'
+        })
+        .then((session) => {
+            const groups = session.groups;
+            const firstIndex = groupIndexes[0];
+            for (let i = 1; i < groupIndexes.length; i++) {
+                const groupIndex = groupIndexes[i];
+                for (const question of groups[groupIndex].studentQuestions) {
+                    copiedQuestion = JSON.parse(JSON.stringify(question.toObject()))
+                    groups[firstIndex].studentQuestions.push(copiedQuestion);
+                }
+            }
+            for (let i = 1; i < groupIndexes.length; i++) {
+                const groupIndex = groupIndexes[i];
+                const offset = i - 1;
+                groups.splice(groupIndex - offset, 1);
+            }
+            session.markModified('groups');
+            session.save();
+
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send({ error: "internal server error" });
+            console.log(err);
+        });
+};
+
+module.exports = { newSession, getSession, addQuestionToTopic, search, getSessionUpdates, getAllTopics, mergeGroups, startMeeting, deleteMeeting, nextTopic };

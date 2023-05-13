@@ -40,7 +40,7 @@ const SessionsDisplay = () => {
 
     return (
         <div>
-            <h1>Your Sessions</h1>
+            {/* <h1>Your Sessions</h1> */}
             <div className={styles.container}>
                 <div className={styles.displayGrid}>
                     {sessions.map((data) => (

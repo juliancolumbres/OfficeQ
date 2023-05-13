@@ -56,7 +56,7 @@ const SessionCard = (props) => {
                     <p>{professorName}</p>
                 </div>
                 <div className={styles.rightLabels}>
-                    <p>{inSession ? "Live" : displayDate}</p>
+                {inSession ? <p className={styles.bold} style={{ color :'red'}}>Live</p> : <p>{displayDate}</p>}
                     <p>{displayStartTime} - {displayEndTime}</p>
                 </div>
             </div>
