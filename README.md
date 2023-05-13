@@ -1,5 +1,10 @@
 # OfficeQ README
 
+0. Project Assumptions <br> 
+   a. User has Node.js downloaded to their device (version 16.15.0) <br>
+   b. User has Visual Studio Code downloaded to their device <br>
+   c. User has a .env file to access the database (for demo purposes, the .env file of the project is omitted) <br>
+
 1. Downloading OfficeQ Locally
 
    a. First, go to https://github.com/juliancolumbres/OfficeQ to find the OfficeQ repository on GitHub <br>
