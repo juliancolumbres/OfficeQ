@@ -3,7 +3,7 @@
 0. Project Assumptions <br> 
    a. User has Node.js downloaded to their device (version 16.15.0) <br>
    b. User has Visual Studio Code downloaded to their device <br>
-   c. User has a .env file to access the database (for demo purposes, the .env file of the project is omitted) <br>
+   c. User has a .env file to access the database (For demo purposes, the .env file of the project is omitted. If needed, create a .env file and copy contents from '.env.example'. Then, copy the uri of your MongoDB source to the URI parameter) <br>
 
 1. Downloading OfficeQ Locally
 
